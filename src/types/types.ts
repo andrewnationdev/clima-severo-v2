@@ -48,6 +48,11 @@ export interface IWeatherData {
   cod: number;
 }
 
+export interface ILocation {
+    lat: number | null;
+    long: number | null;
+}
+
 export interface IMainForecastProps {
   data: IWeatherData;
 }

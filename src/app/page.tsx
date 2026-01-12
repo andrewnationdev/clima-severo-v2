@@ -5,11 +5,15 @@ import { Sun, Wind, Droplets, Sunrise, Sunset } from 'lucide-react';
 import MainSection from './components/sections/main-section';
 import MenuComponent from './components/elements/menu';
 import DetailsPanelSection from './components/sections/details-panel';
-import { IWeatherData } from '@/types/types';
+import { ILocation, IWeatherData } from '@/types/types';
 
 const WeatherApp = () => {
   const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-  const query = "Dubai"
+  const def_query = "Dubai"
+  const [location, setLocation] = useState<ILocation>({
+    lat: 7,
+    long: 9
+  })
   const [data, setData] = useState<IWeatherData>({
     coord: { lon: 0, lat: 0 },
     weather: [{ id: 0, main: '', description: '', icon: '' }],
@@ -26,9 +30,34 @@ const WeatherApp = () => {
     cod: 0,
   });
 
+  function getAPIUrl(){
+    if(location.lat !== null && location.long !== null){
+      return `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.long}&appid=${API_KEY}&units=metric&lang=pt`
+    } else {
+      return `https://api.openweathermap.org/data/2.5/weather?q=${def_query}&appid=${API_KEY}&units=metric&lang=pt`
+    }
+  }
+
+  async function getGeoData(){
+    if("geolocation" in navigator){
+      navigator.geolocation.getCurrentPosition((position)=>{
+        setLocation({
+          lat: position.coords.latitude,
+          long: position.coords.longitude
+        })
+      });
+    } else {
+      setLocation({
+        lat: null,
+        long: null
+      })
+    }
+  }
+
   useEffect(()=>{
     const fetchData = async () => {
-      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${API_KEY}&units=metric&lang=pt`);
+      await getGeoData();
+      const response = await fetch(getAPIUrl());
 
       const data = await response.json();
       setData(data);
