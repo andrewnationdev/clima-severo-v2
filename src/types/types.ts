@@ -55,6 +55,7 @@ export interface ILocation {
 
 export interface IMainForecastProps {
   data: IWeatherData;
+  handleSearch: (query: string) => void;
 }
 
 export interface IHourForecastProps {
@@ -63,4 +64,8 @@ export interface IHourForecastProps {
 
 export interface IDetailsPanelProps {
   data: IWeatherData;
+}
+
+export interface IForecastProps {
+  condition:string;
 }

@@ -1,8 +1,30 @@
 import { IMainForecastProps } from '@/types/types';
-import { Sun } from 'lucide-react';
+import formattedTemperature from '@/utils/temperature';
+import { useState } from 'react';
+import ForecastIcon from './forecast-icon';
 
 export default function MainForecastComponent(props:IMainForecastProps) {
+    const [query, setQuery] = useState('');
+
+    function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        props.handleSearch(query);
+    }
+
     return <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[40px] p-10 flex flex-col justify-between min-h-[400px]">
+        
+        <form onSubmit={handleSubmit} className="mb-6">
+            <div className="flex items-center gap-3">
+                <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Pesquisar cidade"
+                    aria-label="Pesquisar cidade"
+                    className="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/20"
+                />
+                <button type="submit" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full">Buscar</button>
+            </div>
+        </form>
         <div>
             <h1 className="text-4xl font-light">{props.data.name}</h1>
             <p className="text-white/70">Segunda, 5 de Jan</p>
@@ -10,17 +32,17 @@ export default function MainForecastComponent(props:IMainForecastProps) {
 
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
-                <Sun size={80} className="text-yellow-400 drop-shadow-xl" />
+                <ForecastIcon condition={props.data.weather[0].main}/>
                 <div>
-                    <span className="text-8xl font-bold tracking-tighter">{props.data.main.temp}°C</span>
+                    <span className="text-8xl font-bold tracking-tighter">{formattedTemperature(props.data.main.temp)}</span>
                     <p className="text-2xl text-white/80 ml-1">{props.data.weather[0].description}</p>
                 </div>
             </div>
         </div>
 
         <div className="flex justify-between border-t border-white/10 pt-6 text-white/60">
-            <span>Min: {props.data.main.temp_min}°C  Max: {props.data.main.temp_max}°C</span>
-            <span>Sensação: {props.data.main.feels_like}°C</span>
+            <span>Min: {formattedTemperature(props.data.main.temp_min)}  Max: {formattedTemperature(props.data.main.temp_max)}</span>
+            <span>Sensação: {formattedTemperature(props.data.main.feels_like)}</span>
         </div>
     </div>
 

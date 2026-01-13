@@ -1,4 +1,4 @@
-import { Sun, CloudRain, Wind, Droplets, Sunrise, Sunset, MapPin } from 'lucide-react';
+import { Sun, CloudRain, MapPin } from 'lucide-react';
 
 export default function MenuComponent(){
     return <nav className="md:col-span-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-4 flex md:flex-col items-center justify-between md:justify-center gap-8">
