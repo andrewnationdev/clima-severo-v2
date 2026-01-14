@@ -8,7 +8,7 @@ import { ILocation, IWeatherData } from '@/types/types';
 
 const WeatherApp = () => {
   const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-  const [query, setQuery] = useState<string>('Brasília');
+  const [query, setQuery] = useState<string>('');
   const [location, setLocation] = useState<ILocation>({
     lat: null,
     long: null
@@ -19,6 +19,7 @@ const WeatherApp = () => {
 
   function handleSearch(query:string){
     setQuery(query);
+    localStorage.setItem("last-city", query);
   }
 
   function getAPIUrl(){
@@ -48,11 +49,18 @@ const WeatherApp = () => {
   useEffect(()=>{
     const fetchData = async () => {
       //await getGeoData();
+      // 
+      
+      if(localStorage.getItem("last-city")){
+      setQuery(localStorage.getItem("last-city")!);
+    }
       const response = await fetch(getAPIUrl());
 
       const data = await response.json();
       setData(data);
     }
+
+
 
     fetchData()
   },[query])
