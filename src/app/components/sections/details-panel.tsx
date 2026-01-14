@@ -1,7 +1,15 @@
 import { IDetailsPanelProps } from '@/types/types';
 import { Wind, Droplets, Sun, Sunrise, Sunset } from 'lucide-react';
+import WeatherChart from '../elements/temp-chart';
 
 export default function DetailsPanelSection(props: IDetailsPanelProps) {
+    const formatTime = (unix: number) => {
+        return new Date(unix * 1000).toLocaleTimeString('pt-BR', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+
     if (!props.data || !props.data.list) {
         return <div className="text-white">Carregando previsão...</div>;
     }
@@ -37,22 +45,17 @@ export default function DetailsPanelSection(props: IDetailsPanelProps) {
             </div>
 
             <div className="pt-6 border-t border-white/10">
-                <p className="text-sm opacity-60 mb-4">Tendência de Temperatura</p>
-                <div className="h-32 w-full bg-gradient-to-t from-blue-500/20 to-transparent rounded-xl relative overflow-hidden">
-                    <svg viewBox="0 0 100 40" className="absolute bottom-0 w-full h-full stroke-blue-400 fill-none stroke-2">
-                        <path d="M0,35 Q25,10 50,25 T100,5" />
-                    </svg>
-                </div>
+                <WeatherChart data={props.data} />
             </div>
 
             <div className="flex justify-between gap-4 pt-4">
                 <div className="text-center">
                     <Sunrise size={20} className="mx-auto mb-1 opacity-60" />
-                    <p className="text-xs">07:15</p>
+                    <p className="text-xs">{formatTime(props.data.city.sunrise)}</p>
                 </div>
                 <div className="text-center">
                     <Sunset size={20} className="mx-auto mb-1 opacity-60" />
-                    <p className="text-xs">17:45</p>
+                    <p className="text-xs">{formatTime(props.data.city.sunset)}</p>
                 </div>
             </div>
         </div>

@@ -41,7 +41,7 @@ export default function MainForecastComponent(props: IMainForecastProps) {
             </form>
 
             <div>
-                <h1 className="text-4xl font-light">{city.name}</h1>
+                <h1 className="text-4xl font-light">{city.name}, {city.country}</h1>
                 <p className="text-white/70 capitalize">{formattedDate}</p>
             </div>
 
