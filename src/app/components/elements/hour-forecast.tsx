@@ -1,13 +1,25 @@
 import { IHourForecastProps } from '@/types/types';
 import { Sun } from 'lucide-react';
+import ForecastIcon from './forecast-icon';
 
-export default function HourForecastComponent(props:IHourForecastProps) {
+export default function HourForecastComponent(props: IHourForecastProps) {
+    if (!props.data || !props.data.list) {
+        return <div className="text-white">Carregando previsão...</div>;
+    }
+
+    const chartData = props!.data!.list.map(item => ({
+        hour: new Date(item.dt * 1000).getHours() + "h",
+        temp: Math.round(item.main.temp)
+    }));
+
+    console.log(props.data)
+
     return <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 flex justify-around items-center overflow-x-auto gap-4">
-        {[10, 11, 12, 13, 14, 15].map((hour) => (
-            <div key={hour} className={`flex flex-col items-center p-3 rounded-2xl ${hour === 10 ? 'bg-blue-500/40 border border-white/30' : ''}`}>
-                <span className="text-sm opacity-70">{hour}:00</span>
-                <Sun size={20} className="my-2" />
-                <span className="font-semibold">{17 + hour - 10}°</span>
+        {chartData.slice(0,6).map((item) => (
+            <div key={item.hour} className={`flex flex-col items-center p-3 rounded-2xl ${item.hour === "10h" ? 'bg-blue-500/40 border border-white/30' : ''}`}>
+                <span className="text-sm opacity-70">{item.hour}</span>
+                <ForecastIcon size={30} condition={props!.data!.list[0]!.weather[0]!.main}/>
+                <span className="font-semibold">{item.temp}°</span>
             </div>
         ))}
     </div>

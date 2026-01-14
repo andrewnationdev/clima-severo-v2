@@ -4,16 +4,16 @@ import { CloudDrizzle, Cloud, CloudRain, CloudSnow, Sun } from "lucide-react";
 export default function ForecastIcon(props:IForecastProps){
     switch(props.condition){
         case "Clear":
-            return <Sun size={80} className="text-yellow-400 drop-shadow-xl" />
+            return <Sun size={props.size} className="text-white-400 drop-shadow-xl" />
         case "Rain":
-            return <CloudRain size={80} className="text-blue-400 drop-shadow-xl" />
+            return <CloudRain size={props.size} className="text-white-400 drop-shadow-xl" />
         case "Clouds":
-            return <Cloud size={80} className="text-blue-400 drop-shadow-xl" />
+            return <Cloud size={props.size} className="text-white-400 drop-shadow-xl" />
         case "Snow":
-            return <CloudSnow size={80} className="text-blue-200 drop-shadow-xl" />
+            return <CloudSnow size={props.size} className="text-white-200 drop-shadow-xl" />
         case "Drizzle":
-            return <CloudDrizzle size={80} className="text-blue-300 drop-shadow-xl" />
+            return <CloudDrizzle size={props.size} className="text-white-300 drop-shadow-xl" />
         default:
-            return <Sun size={80} className="text-yellow-400 drop-shadow-xl" />
+            return <Sun size={props.size} className="text-white-400 drop-shadow-xl" />
     }
 }

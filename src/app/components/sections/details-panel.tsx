@@ -1,6 +1,11 @@
+import { IDetailsPanelProps } from '@/types/types';
 import { Wind, Droplets, Sun, Sunrise, Sunset } from 'lucide-react';
 
-export default function DetailsPanelSection() {
+export default function DetailsPanelSection(props: IDetailsPanelProps) {
+    if (!props.data || !props.data.list) {
+        return <div className="text-white">Carregando previsão...</div>;
+    }
+
     return <aside className="md:col-span-4 space-y-6">
         <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[40px] p-8 h-full space-y-8">
             <h2 className="text-2xl font-semibold mb-6">Detalhes</h2>
@@ -10,7 +15,7 @@ export default function DetailsPanelSection() {
                     <div className="p-3 bg-white/10 rounded-2xl"><Wind size={20} /></div>
                     <div>
                         <p className="text-sm opacity-60">Vento</p>
-                        <p className="font-medium">5 km/h</p>
+                        <p className="font-medium">{props.data.list[0].wind.speed} km/h</p>
                     </div>
                 </div>
 
@@ -18,7 +23,7 @@ export default function DetailsPanelSection() {
                     <div className="p-3 bg-white/10 rounded-2xl"><Droplets size={20} /></div>
                     <div>
                         <p className="text-sm opacity-60">Umidade</p>
-                        <p className="font-medium">70%</p>
+                        <p className="font-medium">{props.data.list[0].main.humidity}%</p>
                     </div>
                 </div>
 
@@ -31,7 +36,6 @@ export default function DetailsPanelSection() {
                 </div>
             </div>
 
-            {/* Representação do Gráfico */}
             <div className="pt-6 border-t border-white/10">
                 <p className="text-sm opacity-60 mb-4">Tendência de Temperatura</p>
                 <div className="h-32 w-full bg-gradient-to-t from-blue-500/20 to-transparent rounded-xl relative overflow-hidden">
