@@ -44,9 +44,9 @@ export default function DetailsPanelSection(props: IDetailsPanelProps) {
                 </div>
             </div>
 
-            <div className="pt-6 border-t border-white/10">
+            {props.showGraph && <div className="pt-6 border-t border-white/10">
                 <WeatherChart data={props.data} />
-            </div>
+            </div>}
 
             <div className="flex justify-between gap-4 pt-4">
                 <div className="text-center">

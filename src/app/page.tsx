@@ -14,6 +14,8 @@ const WeatherApp = () => {
     long: null
   })
   const [data, setData] = useState<IWeatherData | undefined>(undefined);
+  const [showGraph, setShowGraph] = useState<boolean>(false);
+  const [showHourForecast, setShowHourForecast] = useState<boolean>(false);
 
   function handleSearch(query:string){
     setQuery(query);
@@ -55,13 +57,23 @@ const WeatherApp = () => {
     fetchData()
   },[query])
 
+  function toggleHourForecast(state:boolean){
+    setShowHourForecast(state);
+  }
+
+  function toggleGraph(state:boolean){
+    setShowGraph(state);
+  }
+
+  //bg-[url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=2000')] bg-cover bg-center
+
   return (
-    <div className="min-h-screen bg-[url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=2000')] bg-cover bg-center flex items-center justify-center p-4 font-sans text-white">
+    <div className="min-h-screen bg-blue-900 flex items-center justify-center p-4 font-sans text-white">
       <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 max-w-6xl w-full">
-        <MenuComponent/>
+        <MenuComponent toggleHourForecast={toggleHourForecast} toggleGraph={toggleGraph}/>
         <MainSection data={data} handleSearch={handleSearch}/>
-        <DetailsPanelSection data={data}/>
+        <DetailsPanelSection showGraph={showGraph} data={data}/>
       </div>
     </div>
   );

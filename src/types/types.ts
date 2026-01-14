@@ -82,4 +82,5 @@ export interface IMainForecastProps {
 
 export interface IDetailsPanelProps {
   data: IWeatherData | undefined;
+  showGraph: boolean;
 }
