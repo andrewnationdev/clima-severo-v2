@@ -57,9 +57,17 @@ export interface ILocation {
     long: number | null;
 }
 
+export interface IMenu {
+  toggleHourForecast: (state: boolean) => void;
+  toggleGraph: (state: boolean) => void;
+  toggleShowSearch: (state: boolean) => void;
+}
+
 export interface IMainForecastProps {
   data: IWeatherData | undefined;
   handleSearch: (query: string) => void;
+  showSearch?: boolean;
+  showHourForecast: boolean;
 }
 
 export interface IHourForecastProps {

@@ -2,6 +2,7 @@ import { IMainForecastProps, IWeatherData } from '@/types/types'; // Importe sua
 import formattedTemperature from '@/utils/temperature';
 import { useState } from 'react';
 import ForecastIcon from './forecast-icon';
+import { Search } from 'lucide-react';
 
 export default function MainForecastComponent(props: IMainForecastProps) {
     const [query, setQuery] = useState('');
@@ -27,7 +28,7 @@ export default function MainForecastComponent(props: IMainForecastProps) {
     return (
         <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[40px] p-10 flex flex-col justify-between min-h-[400px]">
             
-            <form onSubmit={handleSubmit} className="mb-6">
+            {props.showSearch && <form onSubmit={handleSubmit} className="mb-6">
                 <div className="flex items-center gap-3">
                     <input
                         value={query}
@@ -36,9 +37,11 @@ export default function MainForecastComponent(props: IMainForecastProps) {
                         aria-label="Pesquisar cidade"
                         className="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/20"
                     />
-                    <button type="submit" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full">Buscar</button>
+                    <button type="submit" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full">
+                        <Search size={20}/>
+                    </button>
                 </div>
-            </form>
+            </form>}
 
             <div>
                 <h1 className="text-4xl font-light">{city.name}, {city.country}</h1>
