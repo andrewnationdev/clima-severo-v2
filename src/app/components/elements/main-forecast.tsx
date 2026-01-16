@@ -3,6 +3,7 @@ import formattedTemperature from '@/utils/temperature';
 import { useState } from 'react';
 import ForecastIcon from './forecast-icon';
 import { Search } from 'lucide-react';
+import Footer from '../sections/footer';
 
 export default function MainForecastComponent(props: IMainForecastProps) {
     const [query, setQuery] = useState('');
@@ -52,7 +53,7 @@ export default function MainForecastComponent(props: IMainForecastProps) {
                 <div className="flex items-center gap-6">
                     <ForecastIcon size={100} condition={current.weather[0].main}/>
                     <div>
-                        <span className="text-8xl font-bold tracking-tighter">
+                        <span className="text-4xl font-bold tracking-tighter">
                             {formattedTemperature(current.main.temp)}
                         </span>
                         <p className="text-2xl text-white/80 ml-1">
@@ -70,6 +71,7 @@ export default function MainForecastComponent(props: IMainForecastProps) {
                     Sensação: {formattedTemperature(current.main.feels_like)}
                 </span>
             </div>
+            <Footer/>
         </div>
     );
 }

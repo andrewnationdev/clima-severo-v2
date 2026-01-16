@@ -5,6 +5,8 @@ import MainSection from './components/sections/main-section';
 import MenuComponent from './components/elements/menu';
 import DetailsPanelSection from './components/sections/details-panel';
 import { ILocation, IWeatherData } from '@/types/types';
+import LoadingApp from './components/sections/loading';
+import ErrorScreen from './components/sections/error';
 
 const WeatherApp = () => {
   const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
@@ -17,6 +19,7 @@ const WeatherApp = () => {
   const [showGraph, setShowGraph] = useState<boolean>(false);
   const [showHourForecast, setShowHourForecast] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   function handleSearch(query: string) {
     setQuery(query);
@@ -31,32 +34,20 @@ const WeatherApp = () => {
     }
   }
 
-  async function getGeoData() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLocation({
-          lat: position.coords.latitude,
-          long: position.coords.longitude
-        })
-      });
-    } else {
-      setLocation({
-        lat: null,
-        long: null
-      })
-    }
-  }
-
   useEffect(() => {
     const fetchData = async () => {
-      //await getGeoData();
-      // 
-
       if (localStorage.getItem("last-city")) {
         setQuery(localStorage.getItem("last-city")!);
       }
 
       const response = await fetch(getAPIUrl());
+
+      if(!response.ok){
+        setError(true);
+        setQuery("São Paulo");
+        localStorage.setItem("last-city", "São Paulo");
+        return;
+      }
 
       const data = await response.json();
       setData(data);
@@ -83,7 +74,7 @@ const WeatherApp = () => {
   return (
     <div className="min-h-screen bg-blue-900 flex items-center justify-center p-4 font-sans text-white">
       <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 max-w-6xl w-full">
+      {data && !error && <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 max-w-6xl w-full">
         <MenuComponent
           toggleShowSearch={toggleSearch}
           toggleHourForecast={toggleHourForecast}
@@ -94,7 +85,11 @@ const WeatherApp = () => {
           handleSearch={handleSearch}
           showSearch={showSearch} />
         <DetailsPanelSection showGraph={showGraph} data={data} />
-      </div>
+      </div> }
+      {!data && !error && <div className="relative z-10 gap-6 w-full">
+        <LoadingApp/>
+      </div>}
+      {error && <ErrorScreen />}
     </div>
   );
 };
