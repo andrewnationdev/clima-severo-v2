@@ -1,4 +1,4 @@
-import { IMainForecastProps, IWeatherData } from '@/types/types'; // Importe sua nova tipagem
+import { IMainForecastProps } from '@/types/types';
 import formattedTemperature from '@/utils/temperature';
 import { useState } from 'react';
 import ForecastIcon from './forecast-icon';

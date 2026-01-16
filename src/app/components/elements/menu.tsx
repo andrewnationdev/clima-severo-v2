@@ -1,5 +1,5 @@
 import { IMenu } from '@/types/types';
-import { Sun, CloudRain, MapPin, ThermometerSun, Search, Clock, InfoIcon } from 'lucide-react';
+import { ThermometerSun, Search, Clock } from 'lucide-react';
 import { useState } from 'react';
 
 export default function MenuComponent(props: IMenu) {
@@ -30,11 +30,5 @@ export default function MenuComponent(props: IMenu) {
 
       showGraph ? setShowGraph(false) : setShowGraph(true);
     }}><ThermometerSun size={24} /></div>
-
-    <div title="Sobre o App" className={`p-3 ${showGraph ? 'bg-blue-500/50' : 'hover:bg-white/10'} rounded-full cursor-pointer transition-colors`} onClick={() => {
-      props.toggleGraph(!showGraph);
-
-      showGraph ? setShowGraph(false) : setShowGraph(true);
-    }}><InfoIcon size={24} /></div>
   </nav>
 }

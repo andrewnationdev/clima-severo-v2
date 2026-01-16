@@ -1,5 +1,5 @@
 import { IWeatherData } from '@/types/types';
-import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, CartesianGrid } from 'recharts';
+import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
 interface IWeatherChartProps {
     data: IWeatherData;
