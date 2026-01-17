@@ -46,7 +46,7 @@ export default function MainForecastComponent(props: IMainForecastProps) {
 
             <div className="motion-safe:animate-fade-in motion-safe:animate-duration-500 motion-safe:animate-delay-150 motion-reduce:animate-none">
                 <h1 className="text-4xl font-light leading-tight">{city.name}, {city.country}</h1>
-                <p className="text-white/70 capitalize motion-safe:animate-fade-in motion-safe:animate-duration-400 motion-safe:animate-delay-200">{formattedDate}</p>
+                <p className="mb-8 text-white/70 capitalize motion-safe:animate-fade-in motion-safe:animate-duration-400 motion-safe:animate-delay-200">{formattedDate}</p>
             </div>
 
             <div className="flex items-center justify-between">
@@ -65,7 +65,7 @@ export default function MainForecastComponent(props: IMainForecastProps) {
 
             <div className="flex justify-between border-t border-white/10 pt-6 text-white/60">
                 <span>
-                    Min: {formattedTemperature(current.main.temp_min)}  Max: {formattedTemperature(current.main.temp_max)}
+                    Min: {formattedTemperature(current.main.temp_min)} | Max: {formattedTemperature(current.main.temp_max)} | 
                 </span>
                 <span>
                     Sensação: {formattedTemperature(current.main.feels_like)}
