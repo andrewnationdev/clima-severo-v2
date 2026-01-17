@@ -14,15 +14,17 @@ export default function WeatherChart({ data }: IWeatherChartProps) {
         temp: Math.round(item.main.temp),
     }));
 
+    const chartHeight = Math.max(140, chartData.length * 34);
+
     return (
         <div
             role="region"
             aria-label="Gráfico de temperatura nas próximas horas"
             aria-describedby="temp-chart-desc"
-            className="h-64 w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-[30px] p-3 mt-2 motion-safe:animate-fade-in"
+            className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-[30px] p-3 mt-2 motion-safe:animate-fade-in min-h-[140px]"
         >
             <span id="temp-chart-desc" className="sr-only">Gráfico mostrando a temperatura prevista nas próximas horas em graus Celsius</span>
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={chartHeight}>
                 <AreaChart data={chartData} margin={{ top: 10, right: 18, left: 0, bottom: 8 }}>
                     <defs>
                         <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
@@ -61,7 +63,8 @@ export default function WeatherChart({ data }: IWeatherChartProps) {
                         }}
                         itemStyle={{ color: '#fff' }}
                         labelStyle={{ color: '#fff', fontSize: 12 }}
-                        formatter={(value: number) => [`${value}°C`, 'Temperatura']}
+                        //@ts-ignore
+                        formatter={(value: number) => [`${value!}°C`, 'Temperatura']}
                         labelFormatter={(label: string) => label}
                     />
 

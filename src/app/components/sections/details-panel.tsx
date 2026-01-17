@@ -21,7 +21,7 @@ export default function DetailsPanelSection(props: IDetailsPanelProps) {
 		title="Painel de detalhes do clima"
 	>
         <div
-			className="group motion-safe:animate-fade-in motion-safe:animate-once motion-safe:animate-duration-400 motion-safe:animate-delay-0 motion-safe:animate-ease-in motion-reduce:animate-none bg-white/10 backdrop-blur-xl border border-white/20 rounded-[40px] p-8 h-full space-y-8"
+			className="group motion-safe:animate-fade-in motion-safe:animate-once motion-safe:animate-duration-400 motion-safe:animate-delay-0 motion-safe:animate-ease-in motion-reduce:animate-none bg-white/10 backdrop-blur-xl border border-white/20 rounded-[40px] p-8 h-auto space-y-8"
 			role="region"
 			aria-labelledby="details-heading"
 			aria-live="polite"
@@ -51,7 +51,7 @@ export default function DetailsPanelSection(props: IDetailsPanelProps) {
                     <div className="p-3 bg-white/10 rounded-2xl" aria-hidden="true"><Sun size={20} /></div>
                     <div>
                         <p className="text-sm opacity-60">Índice UV</p>
-                        <p className="font-medium" aria-label="Índice ultravioleta 3, moderado">3 (Moderado)</p>
+                        <p className="font-medium" aria-label="Índice ultravioleta">3 (Moderado)</p>
                     </div>
                 </div>
             </div>}

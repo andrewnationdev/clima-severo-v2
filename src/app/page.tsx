@@ -69,10 +69,8 @@ const WeatherApp = () => {
     setShowGraph(state);
   }
 
-  // imagem de fundo opcional: bg-[url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=2000')] bg-cover bg-center
-
   return (
-    <div className="min-h-screen bg-blue-900 flex items-center justify-center p-4 font-sans text-white">
+    <div className="bg-[url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=2000')] bg-cover bg-center min-h-screen bg-blue-900 flex items-center justify-center p-4 font-sans text-white">
       <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
       {data && !error && (
         <main role="main" aria-live="polite" aria-atomic="true" className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 max-w-6xl w-full">
