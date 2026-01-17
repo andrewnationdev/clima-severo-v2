@@ -4,7 +4,7 @@ import ForecastIcon from './forecast-icon';
 
 export default function HourForecastComponent(props: IHourForecastProps) {
     if (!props.data || !props.data.list) {
-        return <div className="text-white">Carregando previsão...</div>;
+        return <div className="text-white" role="status" aria-live="polite">Carregando previsão...</div>;
     }
 
     const chartData = props!.data!.list.map(item => ({
@@ -12,15 +12,27 @@ export default function HourForecastComponent(props: IHourForecastProps) {
         temp: Math.round(item.main.temp)
     }));
 
-    console.log(props.data)
+    console.debug('Dados de previsão por hora carregados', props.data)
 
-    return <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 flex justify-around items-center overflow-x-auto gap-4">
-        {chartData.slice(0,6).map((item) => (
-            <div key={item.hour} className={`flex flex-col items-center p-3 rounded-2xl ${item.hour === "10h" ? 'bg-blue-500/40 border border-white/30' : ''}`}>
-                <span className="text-sm opacity-70">{item.hour}</span>
-                <ForecastIcon size={30} condition={props!.data!.list[0]!.weather[0]!.main}/>
-                <span className="font-semibold">{item.temp}°</span>
-            </div>
-        ))}
-    </div>
+    return (
+        <div
+            role="list"
+            aria-label="Previsão por hora"
+            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 flex justify-around items-center overflow-x-auto gap-4 motion-safe:animate-fade-in"
+        >
+            {chartData.slice(0,6).map((item) => (
+                <div
+                    key={item.hour}
+                    role="listitem"
+                    tabIndex={0}
+                    aria-label={`${item.hour}, ${item.temp} graus`}
+                    className={`flex flex-col items-center p-3 rounded-2xl ${item.hour === "10h" ? 'bg-blue-500/40 border border-white/30' : ''} motion-safe:animate-fade-in`}
+                >
+                    <span className="text-sm opacity-70">{item.hour}</span>
+                    <ForecastIcon size={30} condition={props!.data!.list[0]!.weather[0]!.main} aria-hidden="true"/>
+                    <span className="font-semibold">{item.temp}°</span>
+                </div>
+            ))}
+        </div>
+    );
 }

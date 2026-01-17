@@ -69,23 +69,25 @@ const WeatherApp = () => {
     setShowGraph(state);
   }
 
-  //bg-[url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=2000')] bg-cover bg-center
+  // imagem de fundo opcional: bg-[url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=2000')] bg-cover bg-center
 
   return (
     <div className="min-h-screen bg-blue-900 flex items-center justify-center p-4 font-sans text-white">
       <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
-      {data && !error && <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 max-w-6xl w-full">
-        <MenuComponent
-          toggleShowSearch={toggleSearch}
-          toggleHourForecast={toggleHourForecast}
-          toggleGraph={toggleGraph} />
-        <MainSection
-          showHourForecast={showHourForecast}
-          data={data}
-          handleSearch={handleSearch}
-          showSearch={showSearch} />
-        <DetailsPanelSection showGraph={showGraph} data={data} />
-      </div> }
+      {data && !error && (
+        <main role="main" aria-live="polite" aria-atomic="true" className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 max-w-6xl w-full">
+          <MenuComponent
+            toggleShowSearch={toggleSearch}
+            toggleHourForecast={toggleHourForecast}
+            toggleGraph={toggleGraph} />
+          <MainSection
+            showHourForecast={showHourForecast}
+            data={data}
+            handleSearch={handleSearch}
+            showSearch={showSearch} />
+          <DetailsPanelSection showGraph={showGraph} data={data} />
+        </main>
+      ) }
       {!data && !error && <div className="relative z-10 gap-6 w-full">
         <LoadingApp/>
       </div>}

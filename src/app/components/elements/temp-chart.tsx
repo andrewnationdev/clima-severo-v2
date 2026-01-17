@@ -15,13 +15,20 @@ export default function WeatherChart({ data }: IWeatherChartProps) {
     }));
 
     return (
-        <div className="h-[250px] w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-[30px] p-4 mt-2">
-            <ResponsiveContainer>
-                <AreaChart data={chartData}>
+        <div
+            role="region"
+            aria-label="Gráfico de temperatura nas próximas horas"
+            aria-describedby="temp-chart-desc"
+            className="h-64 w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-[30px] p-3 mt-2 motion-safe:animate-fade-in"
+        >
+            <span id="temp-chart-desc" className="sr-only">Gráfico mostrando a temperatura prevista nas próximas horas em graus Celsius</span>
+            <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData} margin={{ top: 10, right: 18, left: 0, bottom: 8 }}>
                     <defs>
                         <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                            <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.36} />
+                            <stop offset="65%" stopColor="#06b6d4" stopOpacity={0.12} />
+                            <stop offset="100%" stopColor="#06b6d4" stopOpacity={0} />
                         </linearGradient>
                     </defs>
 
@@ -29,11 +36,21 @@ export default function WeatherChart({ data }: IWeatherChartProps) {
                         dataKey="time"
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fill: 'rgb(255, 255, 255)', fontSize: 12 }}
-                        dy={10}
+                        tick={{ fill: 'rgb(255, 255, 255)', fontSize: 11 }}
+                        dy={8}
+                        interval={'preserveStartEnd'}
+                        angle={-20}
+                        textAnchor="end"
+                        minTickGap={6}
                     />
 
-                    <YAxis domain={['dataMin - 5', 'dataMax + 5']} tick={{ fill: 'rgb(255, 255, 255)', fontSize: 12 }} />
+                    <YAxis
+                        domain={['dataMin - 5', 'dataMax + 5']}
+                        tick={{ fill: 'rgb(255, 255, 255)', fontSize: 11 }}
+                        axisLine={false}
+                        tickCount={5}
+                        width={36}
+                    />
 
                     <Tooltip
                         contentStyle={{
@@ -43,18 +60,23 @@ export default function WeatherChart({ data }: IWeatherChartProps) {
                             backdropFilter: 'blur(10px)'
                         }}
                         itemStyle={{ color: '#fff' }}
-                        labelStyle={{ display: 'none' }}
+                        labelStyle={{ color: '#fff', fontSize: 12 }}
+                        formatter={(value: number) => [`${value}°C`, 'Temperatura']}
+                        labelFormatter={(label: string) => label}
                     />
 
                     <Area
                         type="monotone"
                         dataKey="temp"
-                        stroke="#3b82f6"
-                        strokeWidth={3}
+                        stroke="#06b6d4"
+                        strokeWidth={2.5}
                         fillOpacity={1}
                         fill="url(#colorTemp)"
+                        dot={{ r: 3, stroke: '#06b6d4', strokeWidth: 1.5, fill: '#fff' }}
+                        activeDot={{ r: 6, stroke: '#0891b2', strokeWidth: 2, fill: '#fff' }}
                         style={{
-                            filter: "drop-shadow(0px 0px 8px rgba(59, 130, 246, 0.8))"
+                            filter: "drop-shadow(0px 6px 18px rgba(6,182,212,0.14))",
+                            transition: 'all 200ms ease'
                         }}
                     />
                 </AreaChart>
