@@ -1,4 +1,6 @@
-export default function ErrorScreen(){
+import { IError } from "@/types/types";
+
+export default function ErrorScreen(props:IError){
     return (
         <div
             role="alert"
@@ -9,6 +11,7 @@ export default function ErrorScreen(){
             <img src="/warning.png" alt="ícone de alerta do aplicativo" width={200} height={200} className="mx-auto"/>
             <h1 className="text-4xl">ClimaSevero v2</h1>
             <h2 className="text-2xl">Ocorreu um Erro!</h2>
+            <h3 className="text-xl">{props.errorMessage}</h3>
             <span className="text-white/60 text-xl">Orgulhosamente desenvolvido por AndrewNation</span>
         </div>
     );

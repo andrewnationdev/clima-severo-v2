@@ -92,3 +92,7 @@ export interface IDetailsPanelProps {
   data: IWeatherData | undefined;
   showGraph: boolean;
 }
+
+export interface IError {
+  errorMessage: string;
+}

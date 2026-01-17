@@ -4,22 +4,19 @@ import 'dotenv/config';
 import MainSection from './components/sections/main-section';
 import MenuComponent from './components/elements/menu';
 import DetailsPanelSection from './components/sections/details-panel';
-import { ILocation, IWeatherData } from '@/types/types';
+import { IWeatherData } from '@/types/types';
 import LoadingApp from './components/sections/loading';
 import ErrorScreen from './components/sections/error';
 
 const WeatherApp = () => {
   const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
   const [query, setQuery] = useState<string>('São Paulo');
-  const [location, setLocation] = useState<ILocation>({
-    lat: null,
-    long: null
-  })
   const [data, setData] = useState<IWeatherData | undefined>(undefined);
   const [showGraph, setShowGraph] = useState<boolean>(false);
   const [showHourForecast, setShowHourForecast] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   function handleSearch(query: string) {
     setQuery(query);
@@ -27,11 +24,7 @@ const WeatherApp = () => {
   }
 
   function getAPIUrl() {
-    if (location.lat !== null && location.long !== null) {
-      return `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.long}&appid=${API_KEY}&units=metric&lang=pt`
-    } else {
       return `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=${API_KEY}&units=metric&lang=pt`
-    }
   }
 
   useEffect(() => {
@@ -44,31 +37,22 @@ const WeatherApp = () => {
 
       if(!response.ok){
         setError(true);
+        const err = await response.statusText;
+
+        if(err == "Not Found" || response.status == 404){
+          setErrorMessage("Cidade não encontrada. Por favor, verifique o nome e tente novamente.");
+        } else {
+          setErrorMessage("Erro ao buscar dados do clima. Por favor, tente novamente mais tarde.");
+        }
+  
         setQuery("São Paulo");
         localStorage.setItem("last-city", "São Paulo");
         return;
       }
 
-      const forecast = await response.json();
 
-      // tentar buscar UV via One Call (current.uvi) usando lat/lon da previsão
-      try {
-        const lat = forecast?.city?.coord?.lat;
-        const lon = forecast?.city?.coord?.lon;
-        if (lat != null && lon != null && API_KEY) {
-          const uvRes = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&appid=${API_KEY}`);
-          if (uvRes.ok) {
-            const uvData = await uvRes.json();
-            const uvi = uvData?.current?.uvi;
-            if (uvi !== undefined) {
-              // anexa uvi em city para usar no componente sem mudar tipos globais
-              forecast.city = { ...forecast.city, uvi };
-            }
-          }
-        }
-      } catch (e) {
-        console.debug('Falha ao buscar UV', e);
-      }
+
+      const forecast = await response.json();
 
       setData(forecast);
     }
@@ -109,7 +93,7 @@ const WeatherApp = () => {
       {!data && !error && <div className="relative z-10 gap-6 w-full">
         <LoadingApp/>
       </div>}
-      {error && <ErrorScreen />}
+      {error && <ErrorScreen errorMessage={errorMessage} />}
     </div>
   );
 };
