@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Essa é uma versão atualizada e melhorada do ClimaSevero (agora legacy) que eu havia feito em Svelt. Agora, decidi refazê-lo em ReactJS, TypeScript e Tailwind, a fim de melhorar a experiência do usuário. A tela inicial do aplicativo é simples e concisa, de modo a auxiliar o usuário na obtenção dos dados sem a necessidade de muitos toques/cliques. Se está à procura da versão legacy, [clique aqui](https://andrewnationdev.vercel.app/docs/projects/climasevero).
 
-## Getting Started
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
-First, run the development server:
+# BIBLIOTECAS ADICIONAIS
+- Tailwind Animated para animações.
+- Recharts para o gráfico elegante de temperatura.
+- OpenWeatherMap para a obtenção dos dados do clima.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# RECURSOS
+- Busca de cidades por nome.
+- Efeito Glassmorphism construído inteiramente com o Tailwind, para conferir elegância e modernidade à interface.
+- Tela de carregamento e tratamento de erros.
+- Tipagem dos componentes em TypeScript.
+- Previsão do tempo por hora.
+- Temperatura máxima, mínima e sensação térmica.
+- Ícones para demonstrar o estado do clima.
+- Velocidade do vento, nível de umidade, visibilidade e horários aproximados do nascer e do pôr do sol.
+- Gráfico de temperatura com Recharts.
+- API da OpenWeatherMaps, garantindo consistência e precisão dos dados.
+- Design pensado para a adaptabilidade a qualquer dispositivo e acessibilidade do usuário.
+- Capacidade de mostrar e ocultar partes da interface, exibindo para o usuário apenas as informações que ele deseja no momento.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# DEMONSTRAÇÃO
+- [Vídeo 1](https://youtu.be/UQH1eKVlvZk)
+- [Vídeo 2](https://youtu.be/J_-oHoTGi40)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# COMO EXECUTAR
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1-Baixe o arquivo zip do repositório e descompacte.
+2-Crie um arquivo `.env` com a chave da API que você obtiver do OpenWeatherMap.
+3-Instale as dependências com `npm install` e depois execute o projeto com `npm run dev`.
