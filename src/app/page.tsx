@@ -49,8 +49,28 @@ const WeatherApp = () => {
         return;
       }
 
-      const data = await response.json();
-      setData(data);
+      const forecast = await response.json();
+
+      // tentar buscar UV via One Call (current.uvi) usando lat/lon da previsão
+      try {
+        const lat = forecast?.city?.coord?.lat;
+        const lon = forecast?.city?.coord?.lon;
+        if (lat != null && lon != null && API_KEY) {
+          const uvRes = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&appid=${API_KEY}`);
+          if (uvRes.ok) {
+            const uvData = await uvRes.json();
+            const uvi = uvData?.current?.uvi;
+            if (uvi !== undefined) {
+              // anexa uvi em city para usar no componente sem mudar tipos globais
+              forecast.city = { ...forecast.city, uvi };
+            }
+          }
+        }
+      } catch (e) {
+        console.debug('Falha ao buscar UV', e);
+      }
+
+      setData(forecast);
     }
 
 
@@ -70,8 +90,8 @@ const WeatherApp = () => {
   }
 
   return (
-    <div className="bg-[url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=2000')] bg-cover bg-center min-h-screen bg-blue-900 flex items-center justify-center p-4 font-sans text-white">
-      <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
+    <div className="bg-[url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=2000')] bg-cover bg-center min-h-screen flex items-center justify-center p-4 font-sans text-white">
+      <div className="absolute inset-0 bg-blue-900/70 backdrop-blur-[2px]"></div>
       {data && !error && (
         <main role="main" aria-live="polite" aria-atomic="true" className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 max-w-6xl w-full">
           <MenuComponent

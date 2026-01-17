@@ -1,5 +1,5 @@
 import { IDetailsPanelProps } from '@/types/types';
-import { Wind, Droplets, Sun, Sunrise, Sunset } from 'lucide-react';
+import { Wind, Droplets, Eye, Sunrise, Sunset } from 'lucide-react';
 import WeatherChart from '../elements/temp-chart';
 
 export default function DetailsPanelSection(props: IDetailsPanelProps) {
@@ -9,6 +9,9 @@ export default function DetailsPanelSection(props: IDetailsPanelProps) {
             minute: '2-digit'
         });
     };
+
+    const rawVis = props.data?.list?.[0]?.visibility;
+    const visValue = typeof rawVis === 'number' ? (rawVis >= 1000 ? `${(rawVis / 1000).toFixed(1)} km` : `${rawVis} m`) : null;
 
     if (!props.data || !props.data.list) {
         return <div className="text-white" role="status" aria-live="polite" title="Carregando previsão">Carregando previsão...</div>;
@@ -30,28 +33,30 @@ export default function DetailsPanelSection(props: IDetailsPanelProps) {
 		>
             <h2 id="details-heading" className="text-2xl font-semibold mb-6">Detalhes</h2>
 
-            {!props.showGraph &&<div className="space-y-6" role="group" aria-label="Métricas do clima">
-                <div className="flex items-center gap-4 motion-safe:animate-fade-in motion-safe:animate-duration-300" role="group" aria-label="Vento" title="Velocidade do vento">
+            {!props.showGraph &&<div className="space-y-6">
+                <div className="flex items-center gap-4">
                     <div className="p-3 bg-white/10 rounded-2xl" aria-hidden="true"><Wind size={20} /></div>
                     <div>
                         <p className="text-sm opacity-60">Vento</p>
-                        <p className="font-medium" aria-label={`${props.data.list[0].wind.speed} quilômetros por hora`}>{props.data.list[0].wind.speed} km/h</p>
+                        <p className="font-medium">{props.data.list[0].wind.speed} km/h</p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 motion-safe:animate-fade-in motion-safe:animate-duration-300 motion-safe:animate-delay-75" role="group" aria-label="Umidade" title="Umidade relativa do ar">
+                <div className="flex items-center gap-4">
                     <div className="p-3 bg-white/10 rounded-2xl" aria-hidden="true"><Droplets size={20} /></div>
                     <div>
                         <p className="text-sm opacity-60">Umidade</p>
-                        <p className="font-medium" aria-label={`${props.data.list[0].main.humidity} por cento`}>{props.data.list[0].main.humidity}%</p>
+                        <p className="font-medium">{props.data.list[0].main.humidity}%</p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 motion-safe:animate-fade-in motion-safe:animate-duration-300 motion-safe:animate-delay-150" role="group" aria-label="Índice UV" title="Índice ultravioleta">
-                    <div className="p-3 bg-white/10 rounded-2xl" aria-hidden="true"><Sun size={20} /></div>
+                <div className="flex items-center gap-4" role="group" aria-label="Visibilidade" title={visValue !== null ? `Visibilidade ${visValue}` : 'Visibilidade não disponível'}>
+                    <div className="p-3 bg-white/10 rounded-2xl" aria-hidden="true"><Eye size={20} /></div>
                     <div>
-                        <p className="text-sm opacity-60">Índice UV</p>
-                        <p className="font-medium" aria-label="Índice ultravioleta">3 (Moderado)</p>
+                        <p className="text-sm opacity-60">Visibilidade</p>
+                        <p className="font-medium" aria-label={visValue !== null ? `Visibilidade ${visValue}` : 'Visibilidade não disponível'}>
+                            {visValue !== null ? visValue : '—'}
+                        </p>
                     </div>
                 </div>
             </div>}
