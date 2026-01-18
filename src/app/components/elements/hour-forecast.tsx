@@ -1,6 +1,6 @@
 import { IHourForecastProps } from '@/types/types';
-import { Sun } from 'lucide-react';
 import ForecastIcon from './forecast-icon';
+import { formattedTemperature } from '@/utils/temperature';
 
 export default function HourForecastComponent(props: IHourForecastProps) {
     if (!props.data || !props.data.list) {
@@ -30,7 +30,7 @@ export default function HourForecastComponent(props: IHourForecastProps) {
                 >
                     <span className="text-sm opacity-70">{item.hour}</span>
                     <ForecastIcon size={30} condition={props!.data!.list[0]!.weather[0]!.main} aria-hidden="true"/>
-                    <span className="font-semibold">{item.temp}°</span>
+                    <span className="font-semibold">{formattedTemperature(item.temp)}</span>
                 </div>
             ))}
         </div>

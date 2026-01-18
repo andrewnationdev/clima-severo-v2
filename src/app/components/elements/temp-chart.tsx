@@ -1,9 +1,5 @@
-import { IWeatherData } from '@/types/types';
+import { IWeatherChartProps } from '@/types/types';
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
-
-interface IWeatherChartProps {
-    data: IWeatherData;
-}
 
 export default function WeatherChart({ data }: IWeatherChartProps) {
     const chartData = data.list.slice(0, 8).map(item => ({

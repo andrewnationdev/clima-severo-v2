@@ -1,5 +1,5 @@
 import { IMainForecastProps } from '@/types/types';
-import formattedTemperature from '@/utils/temperature';
+import { formattedTemperature } from '@/utils/temperature';
 import { useState } from 'react';
 import ForecastIcon from './forecast-icon';
 import { Search } from 'lucide-react';

@@ -1,15 +1,9 @@
 import { IDetailsPanelProps } from '@/types/types';
 import { Wind, Droplets, Eye, Sunrise, Sunset } from 'lucide-react';
 import WeatherChart from '../elements/temp-chart';
+import { formatTime } from '@/utils/temperature';
 
 export default function DetailsPanelSection(props: IDetailsPanelProps) {
-    const formatTime = (unix: number) => {
-        return new Date(unix * 1000).toLocaleTimeString('pt-BR', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    };
-
     const rawVis = props.data?.list?.[0]?.visibility;
     const visValue = typeof rawVis === 'number' ? (rawVis >= 1000 ? `${(rawVis / 1000).toFixed(1)} km` : `${rawVis} m`) : null;
 

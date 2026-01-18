@@ -96,3 +96,7 @@ export interface IDetailsPanelProps {
 export interface IError {
   errorMessage: string;
 }
+
+export interface IWeatherChartProps {
+    data: IWeatherData;
+}
